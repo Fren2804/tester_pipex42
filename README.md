@@ -1,9 +1,16 @@
-# Tester Pipex 42
-A tester for the project pipex of school 42. (Linux)
-> This tester is written **for linux**. ⚠️
-> If this tester was usefull for you i will apreciatte if you leave a star to make it more visible ⭐
-> If you find a bug, sorry. Send me a message on slack please (@franmore) 📧
-> I tried to test all cases, sorry i left someone. In the case of bonus2 (DELIMITER) there is just one test, and i dont know if it correct because i didnt and i cant test it with my code. Sorry ❗
+# Tester for Pipex (42 School)
+
+A simple tester for the **Pipex** project from School 42, built for **Linux** systems. 🐧
+
+> ⚠️ This tester is written **only for Linux**.
+
+If this tester was useful to you, I’d really appreciate it if you left a ⭐ on the repo to help others find it!
+
+If you find a bug, my apologies in advance — feel free to reach out to me on Slack (@franmore) 📧
+
+I’ve tried to cover all the relevant cases. If I missed any, I’m sorry!  
+Regarding the `bonus2` tests (the `DELIMITER`), there's only one test included. I’m not sure it works correctly because I couldn't test that part with my own code. ❗
+
 
 # Installation
 git clone -- and move tester_pipex.sh to main directory. where is make.
