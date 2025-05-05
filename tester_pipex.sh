@@ -1174,7 +1174,7 @@ while [ $n_test_aux -le 38 ]; do
         printf "${RED}%-9s${RESET} " "[KO]"
 		error_aux=1
     fi
-	if [ $n_test_aux -eq 29 ]; then
+	if [ $n_test_aux -eq 30 ]; then
 		comprobar_test_duration $n_test_aux
 		if [ $? -eq 0 ]; then
         	printf "${GREEN}%-10s${RESET} " "[OK]"
