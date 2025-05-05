@@ -69,7 +69,7 @@ It checks the following aspects:
 
 ![Run Example](Run_1.jpg)
 
-### Results
+### Test Details
 
 At the end of the results table, any differences between your `pipex` and the shell output, as well as any memory leaks, will appear in **red**.  
 If all tests pass successfully, a **green** congratulations message will be displayed. 😄
@@ -88,6 +88,11 @@ If you need more information, each test has its own directory containing:
 You can inspect these files for deeper debugging and comparison:
 
 ![Files](Files.png)
+
+But if you need even more details, you can search inside `tester_pipex.sh` using `#NUMBER` to locate and review the exact code of each test, along with a short summary:
+
+![Tests](Tests.png)
+
 
 
 
