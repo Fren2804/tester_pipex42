@@ -23,6 +23,7 @@ git clone https://github.com/Fren2804/tester_pipex42.git
 
 ```
 Move the `*.sh` file from the tester folder to the root of your Pipex directory:
+
 ![Files Organization](Files_Org.png)
 
 -- and move tester_pipex.sh to main directory. where is make.
