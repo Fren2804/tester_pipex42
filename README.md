@@ -45,6 +45,7 @@ Available flags (use only one at a time):
 | `-bonus2`  | Executes `-bonus1` tests + delimiter (here_doc)     |
 
 ##Tests
+
 ### How it works
 
 1. First of all, it will check **Norminette**.
