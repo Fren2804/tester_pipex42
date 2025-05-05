@@ -31,7 +31,8 @@ Move the `*.sh` file from the tester folder to the root of your Pipex directory:
 
 ![Pipe Dir](Pipex_Dir.png)
 
-Use this command:
+Use this command to run the tester:
+
 ```bash
 bash tester_pipex.sh [flag]
 
@@ -43,11 +44,18 @@ Available flags (use only one at a time):
 | `-bonus1`  | Executes `-nobonus` tests + multiple command support |
 | `-bonus2`  | Executes `-bonus1` tests + delimiter (here_doc)     |
 
+##Tests
+### How it works
+
+1. First of all, it will check **Norminette**.
+2. Then, it will compile Pipex **without bonus**.
+3. If a bonus flag is selected, it will also compile Pipex **with bonus**.
+4. After that, the tests will run.
+5. Finally, you'll see the **comparisons between your output and the expected output**.
 
 
 
 
- bash tester_pipex.sh
- This tester test, norminette
- And compiling no bonus and bonus test and makefile
+
+ 
  
