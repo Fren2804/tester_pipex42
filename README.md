@@ -1,5 +1,7 @@
 # Tester for Pipex (42 School)
 
+> 🇬🇧 English | [🇪🇸 Versión en Español](README.es.md)
+
 A simple tester for the **Pipex** project from School 42, built for **Linux** systems. 🐧
 
 > ⚠️ This tester is written **only for Linux**.
