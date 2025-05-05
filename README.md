@@ -12,8 +12,20 @@ I’ve tried to cover all the relevant cases. If I missed any, I’m sorry!
 Regarding the `bonus2` tests (the `DELIMITER`), there's only one test included. I’m not sure it works correctly because I couldn't test that part with my own code. ❗
 
 
-# Installation
-git clone -- and move tester_pipex.sh to main directory. where is make.
+# Usage
+
+## Download and Installation
+
+Clone the repository **into your Pipex directory**:
+
+```bash
+git clone https://github.com/Fren2804/tester_pipex42.git
+
+```
+Move the `*.sh` file from the tester folder to the root of your Pipex directory:
+![Files Organization](Files_Org.png)
+
+-- and move tester_pipex.sh to main directory. where is make.
  -- Run
  bash tester_pipex.sh
  This tester test, norminette
