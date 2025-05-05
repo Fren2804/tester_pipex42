@@ -44,7 +44,7 @@ Available flags (use only one at a time):
 | `-bonus1`  | Executes `-nobonus` tests + multiple command support |
 | `-bonus2`  | Executes `-bonus1` tests + delimiter (here_doc)     |
 
-##Tests
+## Run
 
 ### How it works
 
