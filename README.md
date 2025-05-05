@@ -69,6 +69,29 @@ It checks the following aspects:
 
 ![Run Example](Run_1.jpg)
 
+### Results
+
+At the end of the results table, any differences between your `pipex` and the shell output, as well as any memory leaks, will appear in **red**.  
+If all tests pass successfully, a **green** congratulations message will be displayed. 😄
+
+![Errors Example](Errors.jpg)
+
+If you need more information, each test has its own directory containing:
+
+- The input files (infile examples)
+- The output of your program
+- The original shell output
+- The exit status
+- The return value
+- Valgrind results
+
+You can inspect these files for deeper debugging and comparison:
+
+![Files](Files.jpg)
+
+
+
+
 
 
 
