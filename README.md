@@ -1,7 +1,5 @@
 # Tester for Pipex (42 School)
 
-> 🇬🇧 English | [🇪🇸 Versión en Español](README.es.md)
-
 A simple tester for the **Pipex** project from School 42, built for **Linux** systems. 🐧
 
 > ⚠️ This tester is written **only for Linux**.
@@ -28,8 +26,19 @@ Move the `*.sh` file from the tester folder to the root of your Pipex directory:
 
 ![Files Organization](Files_Org.png)
 
--- and move tester_pipex.sh to main directory. where is make.
- -- Run
+## Run
+Use this command:
+```bash
+bash tester_pipex.sh [flag]
+
+```
+| Flag      | Description                                         |
+|-----------|-----------------------------------------------------|
+| `-nobonus` | Executes tests for Pipex without bonus features     |
+| `-bonus1`  | Executes `-nobonus` tests + multiple command support |
+| `-bonus2`  | Executes `-bonus1` tests + delimiter (here_doc)     |
+
+
  bash tester_pipex.sh
  This tester test, norminette
  And compiling no bonus and bonus test and makefile
