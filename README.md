@@ -117,6 +117,8 @@ If you have memory leaks — check it.
 
 If you left file descriptors open — check it.
 
+# Thank you 😃
+
 
 
 
