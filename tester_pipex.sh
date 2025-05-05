@@ -636,7 +636,15 @@ echo "Test ${n_test} - Error pipex:$error1" > $out/outfile${n_test}_errors
 
 ((n_test++))
 
-#22 - Infile Error - Empty args - Outfile Error
+#22 - Infile Good - 3 Commands Good - Outfile Good
+valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile2" "ls -l" "cat -e" "cat -e" "$out/outfile${n_test}"> $out/outfile${n_test}_val 2>&1
+{ ${pipex_dir}pipex "$inf/infile2" "ls -l" "cat -e" "cat -e" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
+error1=$?
+echo "Test ${n_test} - Error pipex:$error1" > $out/outfile${n_test}_errors
+
+((n_test++))
+
+#23 - Infile Error - Empty args - Outfile Error
 valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile" "         " "      " "$out/outfile_p1"> $out/outfile${n_test}_val 2>&1
 { ${pipex_dir}pipex "$inf/infile" "         " "      " "$out/outfile_p1";} > "$out/outfile${n_test}_exit" 2>&1
 error1=$?
@@ -644,7 +652,7 @@ echo "Test ${n_test} - Error pipex:$error1" > $out/outfile${n_test}_errors
 
 ((n_test++))
 
-#23 - Infile Error - First command Error - Empty arg - Outfile Error
+#24 - Infile Error - First command Error - Empty arg - Outfile Error
 valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile" "   hjg      " "      " "$out/outfile_p1"> $out/outfile${n_test}_val 2>&1
 { ${pipex_dir}pipex "$inf/infile" "   hjg      " "      " "$out/outfile_p1";} > "$out/outfile${n_test}_exit" 2>&1
 error1=$?
@@ -652,7 +660,7 @@ echo "Test ${n_test} - Error pipex:$error1" > $out/outfile${n_test}_errors
 
 ((n_test++))
 
-#24 - Infile Error - Empty arg - Last command Error  - Outfile Error
+#25 - Infile Error - Empty arg - Last command Error  - Outfile Error
 valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile" "      " "   hjg      " "$out/outfile_p1"> $out/outfile${n_test}_val 2>&1
 { ${pipex_dir}pipex "$inf/infile" "      " "   hjg      " "$out/outfile_p1";} > "$out/outfile${n_test}_exit" 2>&1
 error1=$?
@@ -660,7 +668,7 @@ echo "Test ${n_test} - Error pipex:$error1" > $out/outfile${n_test}_errors
 
 ((n_test++))
 
-#25 - Infile Empty - 2 Commands Good - Outfile Good
+#26 - Infile Empty - 2 Commands Good - Outfile Good
 valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile2" "grep hola" "ls -l" "$out/outfile${n_test}" > $out/outfile${n_test}_val 2>&1
 { ${pipex_dir}pipex "$inf/infile2" "grep hola" "ls -l" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 error1=$?
@@ -670,7 +678,7 @@ echo "Test ${n_test} - Error pipex:$error1 error original:$error2" > $out/outfil
 
 ((n_test++))
 
-#26 - Infile Empty - 2 Commands Good - Outfile Good
+#27 - Infile Empty - 2 Commands Good - Outfile Good
 valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile2" "ls -l" "grep hola" "$out/outfile${n_test}" > $out/outfile${n_test}_val 2>&1
 { ${pipex_dir}pipex "$inf/infile2" "ls -l" "grep hola" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 error1=$?
@@ -680,7 +688,7 @@ echo "Test ${n_test} - Error pipex:$error1 error original:$error2" > $out/outfil
 
 ((n_test++))
 
-#27 - Infile Empty - 2 Commands Good - Outfile Good
+#28 - Infile Empty - 2 Commands Good - Outfile Good
 valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile2" "ls -l" "grep hola1" "$out/outfile${n_test}" > $out/outfile${n_test}_val 2>&1
 { ${pipex_dir}pipex "$inf/infile2" "ls -l" "grep hola1" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 error1=$?
@@ -690,7 +698,7 @@ echo "Test ${n_test} - Error pipex:$error1 error original:$error2" > $out/outfil
 
 ((n_test++))
 
-#28 - Infile Good - 2 Commands Good - Outfile Good
+#29 - Infile Good - 2 Commands Good - Outfile Good
 valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile3" "grep hola" "wc -l" "$out/outfile${n_test}" > $out/outfile${n_test}_val 2>&1
 { ${pipex_dir}pipex "$inf/infile3" "grep hola" "wc -l" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 error1=$?
@@ -700,7 +708,7 @@ echo "Test ${n_test} - Error pipex:$error1 error original:$error2" > $out/outfil
 
 ((n_test++))
 
-#29 - Infile Good - 2 Commands Good - Outfile Good
+#30 - Infile Good - 2 Commands Good - Outfile Good
 start_val=$(date +%s)
 valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile3" "grep hola" "sleep 8" "$out/outfile${n_test}" > $out/outfile${n_test}_val 2>&1
 end_val=$(date +%s)
@@ -720,7 +728,7 @@ echo "Val:$duration_val Me:$duration Ori:$duration_ori" > $out/outfile${n_test}_
 
 ((n_test++))
 
-#30 - Infile Good - 2 Commands Good - Outfile Good
+#31 - Infile Good - 2 Commands Good - Outfile Good
 valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile3" "grep -i "hola"" "cat -e" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
 { ${pipex_dir}pipex "$inf/infile3" "grep -i "hola"" "cat -e" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 error1=$?
@@ -730,7 +738,7 @@ echo "Test ${n_test} - Error pipex:$error1 error original:$error2" > $out/outfil
 
 ((n_test++))
 
-#31 - Infile Good - 2 Commands Good - Outfile Good
+#32 - Infile Good - 2 Commands Good - Outfile Good
 valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile4" "grep -o -i "lorem"" "cat -e" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
 { ${pipex_dir}pipex "$inf/infile4" "grep -o -i "lorem"" "cat -e" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 error1=$?
@@ -740,7 +748,7 @@ echo "Test ${n_test} - Error pipex:$error1 error original:$error2" > $out/outfil
 
 ((n_test++))
 
-#32 - Infile Good - 2 Commands Good - Outfile Good
+#33 - Infile Good - 2 Commands Good - Outfile Good
 valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile4" "ls -l -a" "cat -e -n" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
 { ${pipex_dir}pipex "$inf/infile4" "ls -l -a" "cat -e -n" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 error1=$?
@@ -750,19 +758,6 @@ echo "Test ${n_test} - Error pipex:$error1 error original:$error2" > $out/outfil
 
 ((n_test++))
 
-#33 - Infile Good - 2 Commands Good - Outfile Good
-valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile6" "head -4" "cat -e -n" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
-{ ${pipex_dir}pipex "$inf/infile6" "head -4" "cat -e -n" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
-error1=$?
-{ head -4 < "$inf/infile6" | cat -e -n > "$out/outfile${n_test}_ori"; } 2> "$out/outfile${n_test}_ori_exit"
-error2=$?
-echo "Test ${n_test} - Error pipex:$error1 error original:$error2" > $out/outfile${n_test}_errors
-
-((n_test++))
-touch $out/outfile${n_test}
-chmod 777 $out/outfile${n_test}
-touch $out/outfile${n_test}_ori
-chmod 777 $out/outfile${n_test}_ori
 #34 - Infile Good - 2 Commands Good - Outfile Good
 valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile6" "head -4" "cat -e -n" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
 { ${pipex_dir}pipex "$inf/infile6" "head -4" "cat -e -n" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
@@ -777,6 +772,19 @@ chmod 777 $out/outfile${n_test}
 touch $out/outfile${n_test}_ori
 chmod 777 $out/outfile${n_test}_ori
 #35 - Infile Good - 2 Commands Good - Outfile Good
+valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile6" "head -4" "cat -e -n" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
+{ ${pipex_dir}pipex "$inf/infile6" "head -4" "cat -e -n" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
+error1=$?
+{ head -4 < "$inf/infile6" | cat -e -n > "$out/outfile${n_test}_ori"; } 2> "$out/outfile${n_test}_ori_exit"
+error2=$?
+echo "Test ${n_test} - Error pipex:$error1 error original:$error2" > $out/outfile${n_test}_errors
+
+((n_test++))
+touch $out/outfile${n_test}
+chmod 777 $out/outfile${n_test}
+touch $out/outfile${n_test}_ori
+chmod 777 $out/outfile${n_test}_ori
+#36 - Infile Good - 2 Commands Good - Outfile Good
 valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile6" "cat -e" "grep nothing" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
 { ${pipex_dir}pipex "$inf/infile6" "cat -e" "grep nothing" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 error1=$?
@@ -789,7 +797,7 @@ touch $out/outfile${n_test}
 chmod 777 $out/outfile${n_test}
 touch $out/outfile${n_test}_ori
 chmod 777 $out/outfile${n_test}_ori
-#36 - Infile Good - 2 Commands Good - Outfile Good
+#37 - Infile Good - 2 Commands Good - Outfile Good
 valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile6" "grep nothing" "cat -e" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
 { ${pipex_dir}pipex "$inf/infile6" "grep nothing" "cat -e" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 error1=$?
@@ -799,7 +807,7 @@ echo "Test ${n_test} - Error pipex:$error1 error original:$error2" > $out/outfil
 
 ((n_test++))
 
-#37 - Infile Good - 2 Commands Good - Outfile Good
+#38 - Infile Good - 2 Commands Good - Outfile Good
 valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile6" "head -4" "cat -e -n" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
 { ${pipex_dir}pipex "$inf/infile6" "head -4" "cat -e -n" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 error1=$?
@@ -811,7 +819,7 @@ if [[ "$1" == "-nobonus" ]]; then
     ((n_test++))
 	ORIGINAL_PATH=$PATH
     unset PATH
-    #38 - Infile Good - First Command Good - Last Command no Exist - Outfile Good
+    #39 - Infile Good - First Command Good - Last Command no Exist - Outfile Good
     { ${pipex_dir}pipex "$inf/infile6" "head -4" "noexistingcommand" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 	error1=$?
 	#Stderr 127
@@ -842,7 +850,7 @@ else
 
 	((n_test++))
 
-	#38 - Infile Good - 2 Command Good - 2 Command Empty - Outfile Good
+	#39 - Infile Good - 2 Command Good - 2 Command Empty - Outfile Good
 	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile6" "head -4" "cat -e -n" "   " "    " "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
 	{ ${pipex_dir}pipex "$inf/infile6" "head -4" "cat -e -n" "   " "    " "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 	error1=$?
@@ -850,7 +858,7 @@ else
 
 	((n_test++))
 
-	#39 - Infile Good - 1 Command Good - Outfile Good
+	#40 - Infile Good - 1 Command Good - Outfile Good
 	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile" "head -4" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
 	{ ${pipex_dir}pipex "$inf/infile" "head -4" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 	error1=$?
@@ -858,7 +866,7 @@ else
 
 	((n_test++))
 
-	#40 - Infile Good - 3 Command Good - 1 Command Empty - Outfile Good
+	#41 - Infile Good - 3 Command Good - 1 Command Empty - Outfile Good
 	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile" "head -4" "ls -l" "cat -e" "    " "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
 	{ ${pipex_dir}pipex "$inf/infile" "head -4" "ls -l" "cat -e" "    " "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 	error1=$?
@@ -866,7 +874,7 @@ else
 
 	((n_test++))
 
-	#41 - Infile no Exist - 4 Commands Good - Outfile Good
+	#42 - Infile no Exist - 4 Commands Good - Outfile Good
 	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile" "head -4" "cat -e" "ls -l" "sort" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
 	{ ${pipex_dir}pipex "$inf/infile" "head -4" "cat -e" "ls -l" "sort" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 	error1=$?
@@ -876,7 +884,7 @@ else
 
 	((n_test++))
 
-	#42 - Infile no Permission - 4 Commands Good - Outfile Good
+	#43 - Infile no Permission - 4 Commands Good - Outfile Good
 	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile" "head -4" "cat -e" "ls -l" "cat -e" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
 	{ ${pipex_dir}pipex "$inf/infile" "head -4" "cat -e" "ls -l" "cat -e" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 	error1=$?
@@ -886,7 +894,7 @@ else
 
 	((n_test++))
 
-	#43 - Infile no Permission - 3 Commands Good - 1 Command no Exist - Outfile Good
+	#44 - Infile no Permission - 3 Commands Good - 1 Command no Exist - Outfile Good
 	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile" "head -4" "cat -e" "hihuih" "cat -e" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
 	{ ${pipex_dir}pipex "$inf/infile" "head -4" "cat -e" "hihuih" "cat -e" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 	error1=$?
@@ -896,7 +904,7 @@ else
 
 	((n_test++))
 
-	#44 - Infile Good - 3 Commands Good - 1 Command no Exist - Outfile Good
+	#45 - Infile Good - 3 Commands Good - 1 Command no Exist - Outfile Good
 	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile6" "head -4" "cat -e" "hihuih" "cat -e" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
 	{ ${pipex_dir}pipex "$inf/infile6" "head -4" "cat -e" "hihuih" "cat -e" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 	error1=$?
@@ -910,7 +918,7 @@ else
 	touch $out/outfile${n_test}_ori
 	chmod 777 $out/outfile${n_test}_ori
 
-	#45 - Infile Good - 4 Commands Good - Outfile Good
+	#46 - Infile Good - 4 Commands Good - Outfile Good
 	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile6" "head -4" "cat -e" "ls -l" "grep nononono" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
 	{ ${pipex_dir}pipex "$inf/infile6" "head -4" "cat -e" "ls -l" "grep nononono" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 	error1=$?
@@ -920,7 +928,7 @@ else
 
 	((n_test++))
 
-	#46 - Infile Good - 4 Commands Good - Outfile no Permission
+	#47 - Infile Good - 4 Commands Good - Outfile no Permission
 	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile6" "head -4" "cat -e" "ls -l" "cat -e" "$out/outfile_p1" > "$out/outfile${n_test}_val" 2>&1
 	{ ${pipex_dir}pipex "$inf/infile6" "head -4" "cat -e" "ls -l" "cat -e" "$out/outfile_p1"; } > "$out/outfile${n_test}_exit" 2>&1
 	error1=$?
@@ -930,7 +938,7 @@ else
 
 	((n_test++))
 
-	#47 - Infile Good - 1 Command Good - 3 Commands Error - Outfile Good
+	#48 - Infile Good - 1 Command Good - 3 Commands Error - Outfile Good
 	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile6" "cat -e" "nocommand" "command42Madrid" "FundacionTelefonica" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
 	{ ${pipex_dir}pipex "$inf/infile6" "cat -e" "nocommand" "command42Madrid" "FundacionTelefonica" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 	error1=$?
@@ -940,7 +948,7 @@ else
 
 	((n_test++))
 
-	#48 - Infile Good - 8 Commands Good - Outfile Good
+	#49 - Infile Good - 8 Commands Good - Outfile Good
 	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile6" "cat -e" "cat -e" "cat -e" "cat -e" "cat -e" "cat -e" "cat -e" "cat -e" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
 	{ ${pipex_dir}pipex "$inf/infile6" "cat -e" "cat -e" "cat -e" "cat -e" "cat -e" "cat -e" "cat -e" "cat -e" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 	error1=$?
@@ -952,7 +960,7 @@ else
 		((n_test++))
 		ORIGINAL_PATH=$PATH
 		unset PATH
-		#49 - Infile Good - First Command Good - Last Command no Exist - Outfile Good
+		#50 - Infile Good - First Command Good - Last Command no Exist - Outfile Good
 		{ ${pipex_dir}pipex "$inf/infile6" "head -4" "noexistingcommand" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 		error1=$?
 		export PATH=$ORIGINAL_PATH
@@ -964,7 +972,7 @@ bash: noexistingcommand: No such file or directory" > $out/outfile${n_test}_ori_
 		echo "Test ${n_test} - Error pipex:$error1 error original:$error2" > $out/outfile${n_test}_errors
 	else
 		((n_test++))
-		#49 - Infile Good - DELIMITER - Outfile Good
+		#50 - Infile Good - DELIMITER - Outfile Good
 		valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex here_doc END "grep hola" "wc -l" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
 		{ ${pipex_dir}pipex here_doc END "grep hola" "wc -l" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 		error1=$?
@@ -979,7 +987,7 @@ END
 		((n_test++))
 		ORIGINAL_PATH=$PATH
 		unset PATH
-		#50 - Infile Good - First Command Good - Last Command no Exist - Outfile Good
+		#51 - Infile Good - First Command Good - Last Command no Exist - Outfile Good
 		{ ${pipex_dir}pipex "$inf/infile6" "head -4" "noexistingcommand" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 		error1=$?
 		export PATH=$ORIGINAL_PATH
@@ -1094,8 +1102,8 @@ while [ $n_test_aux -le 16 ]; do
     ((n_test_aux++))
 done
 
-#Test 17 - 24
-while [ $n_test_aux -le 24 ]; do
+#Test 17 - 25
+while [ $n_test_aux -le 25 ]; do
 	error_aux=0
     printf "%-30s " "Test $n_test_aux"
     comprobar_test_out_3 $n_test_aux
@@ -1141,8 +1149,8 @@ while [ $n_test_aux -le 24 ]; do
     ((n_test_aux++))
 done
 
-#Test 25 - 37
-while [ $n_test_aux -le 37 ]; do
+#Test 26 - 38
+while [ $n_test_aux -le 38 ]; do
 	error_aux=0
     printf "%-30s " "Test $n_test_aux"
     comprobar_test_out_1 $n_test_aux
@@ -1198,7 +1206,7 @@ while [ $n_test_aux -le 37 ]; do
     ((n_test_aux++))
 done
 
-#Test 38 no bonus path
+#Test 39 no bonus path
 if [[ "$1" == "-nobonus" ]]; then
 	echo
 	echo -e "${YELLOW}Test Unset PATH${RESET}"
@@ -1239,8 +1247,8 @@ fi
 echo
 echo -e "${YELLOW}Bonus 1 Tests${RESET}"
 
-#Test 38 - 40
-while [ $n_test_aux -le 40 ]; do
+#Test 39 - 41
+while [ $n_test_aux -le 41 ]; do
 	error_aux=0
     printf "%-30s " "Test $n_test_aux"
     comprobar_test_out_3 $n_test_aux
@@ -1286,54 +1294,7 @@ while [ $n_test_aux -le 40 ]; do
     ((n_test_aux++))
 done
 
-#Test 41 - 47
-while [ $n_test_aux -le 47 ]; do
-	error_aux=0
-    printf "%-30s " "Test $n_test_aux"
-    comprobar_test_out_1 $n_test_aux
-    if [ $? -eq 0 ]; then
-        printf "${GREEN}%-11s${RESET} " "[OK]"
-    else
-        printf "${RED}%-11s${RESET} " "[KO]"
-		error_aux=1
-    fi
-    comprobar_test_exit_1 $n_test_aux
-    if [ $? -eq 0 ]; then
-        printf "${GREEN}%-11s${RESET} " "[OK]"
-    else
-        printf "${RED}%-11s${RESET} " "[KO]"
-		error_aux=1
-    fi
-    comprobar_test_errors_1 $n_test_aux
-    if [ $? -eq 0 ]; then
-        printf "${GREEN}%-9s${RESET} " "[OK]"
-    else
-        printf "${RED}%-9s${RESET} " "[KO]"
-		error_aux=1
-    fi
-    printf "%-10s " " "
-    comprobar_test_val_leaks $n_test_aux
-    if [ $? -eq 0 ]; then
-        printf "${GREEN}%-9s${RESET} " "[OK]"
-    else
-        printf "${RED}%-9s${RESET} " "[KO]"
-		error_aux=1
-    fi
-    comprobar_test_val_fd $n_test_aux
-    if [ $? -eq 0 ]; then
-        printf "${GREEN}%-10s${RESET} " "[OK]"
-    else
-        printf "${RED}%-10s${RESET} " "[KO]"
-		error_aux=1
-    fi
-    echo
-	if [ $error_aux -eq 1 ]; then
-    	echo "-------------------------------">> $comp/result
-	fi
-    ((n_test_aux++))
-done
-
-#Test 48
+#Test 42 - 48
 while [ $n_test_aux -le 48 ]; do
 	error_aux=0
     printf "%-30s " "Test $n_test_aux"
@@ -1358,7 +1319,7 @@ while [ $n_test_aux -le 48 ]; do
         printf "${RED}%-9s${RESET} " "[KO]"
 		error_aux=1
     fi
-	printf "%-10s " " "
+    printf "%-10s " " "
     comprobar_test_val_leaks $n_test_aux
     if [ $? -eq 0 ]; then
         printf "${GREEN}%-9s${RESET} " "[OK]"
@@ -1379,48 +1340,6 @@ while [ $n_test_aux -le 48 ]; do
 	fi
     ((n_test_aux++))
 done
-
-#Test 49 bonus 1 path
-if [[ "$1" == "-bonus1" ]]; then
-	echo
-	echo -e "${YELLOW}Test Unset PATH${RESET}"
-	error_aux=0
-    printf "%-30s " "Test $n_test_aux"
-    comprobar_test_out_1 $n_test_aux
-    if [ $? -eq 0 ]; then
-        printf "${GREEN}%-11s${RESET} " "[OK]"
-    else
-        printf "${RED}%-11s${RESET} " "[KO]"
-		error_aux=1
-    fi
-    comprobar_test_exit_path $n_test_aux
-    if [ $? -eq 0 ]; then
-        printf "${GREEN}%-11s${RESET} " "[OK]"
-    else
-        printf "${RED}%-11s${RESET} " "[KO]"
-		error_aux=1
-    fi
-    comprobar_test_errors_1 $n_test_aux
-    if [ $? -eq 0 ]; then
-        printf "${GREEN}%-9s${RESET} " "[OK]"
-    else
-        printf "${RED}%-9s${RESET} " "[KO]"
-		error_aux=1
-    fi
-    printf "%-10s " " "
-    printf "%-10s " " "
-	printf "%-10s " " "
-    echo
-    if [ $error_aux -eq 1 ]; then
-    	echo "-------------------------------">> $comp/result
-	fi
-	print_results
-fi
-
-
-#Bonus2
-echo
-echo -e "${YELLOW}Bonus 2 Tests${RESET}"
 
 #Test 49
 while [ $n_test_aux -le 49 ]; do
@@ -1469,9 +1388,98 @@ while [ $n_test_aux -le 49 ]; do
     ((n_test_aux++))
 done
 
+#Test 50 bonus 1 path
+if [[ "$1" == "-bonus1" ]]; then
+	echo
+	echo -e "${YELLOW}Test Unset PATH${RESET}"
+	error_aux=0
+    printf "%-30s " "Test $n_test_aux"
+    comprobar_test_out_1 $n_test_aux
+    if [ $? -eq 0 ]; then
+        printf "${GREEN}%-11s${RESET} " "[OK]"
+    else
+        printf "${RED}%-11s${RESET} " "[KO]"
+		error_aux=1
+    fi
+    comprobar_test_exit_path $n_test_aux
+    if [ $? -eq 0 ]; then
+        printf "${GREEN}%-11s${RESET} " "[OK]"
+    else
+        printf "${RED}%-11s${RESET} " "[KO]"
+		error_aux=1
+    fi
+    comprobar_test_errors_1 $n_test_aux
+    if [ $? -eq 0 ]; then
+        printf "${GREEN}%-9s${RESET} " "[OK]"
+    else
+        printf "${RED}%-9s${RESET} " "[KO]"
+		error_aux=1
+    fi
+    printf "%-10s " " "
+    printf "%-10s " " "
+	printf "%-10s " " "
+    echo
+    if [ $error_aux -eq 1 ]; then
+    	echo "-------------------------------">> $comp/result
+	fi
+	print_results
+fi
+
+
+#Bonus2
+echo
+echo -e "${YELLOW}Bonus 2 Tests${RESET}"
+
+#Test 50
+while [ $n_test_aux -le 50 ]; do
+	error_aux=0
+    printf "%-30s " "Test $n_test_aux"
+    comprobar_test_out_1 $n_test_aux
+    if [ $? -eq 0 ]; then
+        printf "${GREEN}%-11s${RESET} " "[OK]"
+    else
+        printf "${RED}%-11s${RESET} " "[KO]"
+		error_aux=1
+    fi
+    comprobar_test_exit_1 $n_test_aux
+    if [ $? -eq 0 ]; then
+        printf "${GREEN}%-11s${RESET} " "[OK]"
+    else
+        printf "${RED}%-11s${RESET} " "[KO]"
+		error_aux=1
+    fi
+    comprobar_test_errors_1 $n_test_aux
+    if [ $? -eq 0 ]; then
+        printf "${GREEN}%-9s${RESET} " "[OK]"
+    else
+        printf "${RED}%-9s${RESET} " "[KO]"
+		error_aux=1
+    fi
+	printf "%-10s " " "
+    comprobar_test_val_leaks $n_test_aux
+    if [ $? -eq 0 ]; then
+        printf "${GREEN}%-9s${RESET} " "[OK]"
+    else
+        printf "${RED}%-9s${RESET} " "[KO]"
+		error_aux=1
+    fi
+    comprobar_test_val_fd $n_test_aux
+    if [ $? -eq 0 ]; then
+        printf "${GREEN}%-10s${RESET} " "[OK]"
+    else
+        printf "${RED}%-10s${RESET} " "[KO]"
+		error_aux=1
+    fi
+    echo
+	if [ $error_aux -eq 1 ]; then
+    	echo "-------------------------------">> $comp/result
+	fi
+    ((n_test_aux++))
+done
+
 echo
 echo -e "${YELLOW}Test Unset PATH${RESET}"
-#Test 50 bonus 2 path
+#Test 51 bonus 2 path
 error_aux=0
 printf "%-30s " "Test $n_test_aux"
 comprobar_test_out_1 $n_test_aux
