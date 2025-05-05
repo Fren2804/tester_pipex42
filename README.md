@@ -32,6 +32,7 @@ Use this command:
 bash tester_pipex.sh [flag]
 
 ```
+Available flags (use only one at a time):
 | Flag      | Description                                         |
 |-----------|-----------------------------------------------------|
 | `-nobonus` | Executes tests for Pipex without bonus features     |
