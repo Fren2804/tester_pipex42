@@ -25,12 +25,12 @@ git clone https://github.com/Fren2804/tester_pipex42.git
 ```
 Mueve el archivo *.sh desde la carpeta del tester a la raíz de tu directorio de Pipex:
 
-![Organizacion de Archivos](Files_Org.png)
+![Organizacion de Archivos](images/Files_Org.png)
 
 ## Ejecución
 ⚠️ Si tu comando make coloca el binario pipex en un directorio distinto, debes indicar la ruta correcta en tester_pipex.sh, en la línea 18 (pipex_dir):
 
-![Directorio Pipex](Pipex_Dir.png)
+![Directorio Pipex](images/Pipex_Dir.png)
 
 Usa este comando para ejecutar el tester:
 
@@ -76,14 +76,14 @@ También se comprueban casos límite como:
 
 ⚠️ Este proceso no es rápido, así que tómalo con calma y ten paciencia.
 
-![Ejemplo de ejecución](Run_1.jpg)
+![Ejemplo de ejecución](images/Run_1.jpg)
 
 ### Detalles de los tests
 
 Al final de la tabla de resultados, cualquier diferencia entre tu `pipex` y la salida de la shell, así como cualquier fuga de memoria, aparecerán en **rojo**.  
 Si todos los tests se completan con éxito, se mostrará un mensaje de felicitación en **verde**. 😄
 
-![Ejemplo de errores](Errors.jpg)
+![Ejemplo de errores](images/Errors.jpg)
 
 Si necesitas más información, cada test tiene su propio directorio que contiene:
 
@@ -96,12 +96,12 @@ Si necesitas más información, cada test tiene su propio directorio que contien
 
 Puedes revisar estos archivos para hacer un debug más profundo y comparar resultados:
 
-![Archivos](Files.png)
+![Archivos](images/Files.png)
 
 Y si necesitas aún más detalles, puedes buscar en `tester_pipex.sh` usando `#NUMBER`  
 para localizar y revisar el código exacto de cada test, junto con un pequeño resumen:
 
-![Tests](Tests.png)
+![Tests](images/Tests.png)
 
 ## ⚠️ Notas
 
