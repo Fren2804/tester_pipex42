@@ -44,7 +44,7 @@ Available flags (use only one at a time):
 | `-bonus1`  | Executes `-nobonus` tests + multiple command support |
 | `-bonus2`  | Executes `-bonus1` tests + delimiter (here_doc)     |
 
-## Run
+## Tests
 
 ### How it works
 
@@ -53,6 +53,10 @@ Available flags (use only one at a time):
 3. If a bonus flag is selected, it will also compile Pipex **with bonus**.
 4. After that, the tests will run.
 5. Finally, you'll see the **comparisons between your output and the expected output**.
+
+⚠️ This process is not fast, so take it easy and be patient.
+
+![Run Example](Run_1.jpg)
 
 
 
