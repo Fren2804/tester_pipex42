@@ -39,6 +39,11 @@ Available flags (use only one at a time):
 | `-bonus1`  | Executes `-nobonus` tests + multiple command support |
 | `-bonus2`  | Executes `-bonus1` tests + delimiter (here_doc)     |
 
+If your `make` command puts the `pipex` binary in a different directory, you must set the correct path in `tester_pipex.sh`, on **line 18** (`pipex_dir`):
+
+![Pipe Dir](Pipex_Dir.png)
+
+
 
  bash tester_pipex.sh
  This tester test, norminette
