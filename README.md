@@ -110,8 +110,12 @@ If your result is close or still makes sense logically, you can continue.
 This tool is meant to help **find possible mistakes**, not to force a strict implementation.
 
 However, if your `pipex` returns `0` when it should return `1`, `2`, `127`, or **any non-zero value** (because it's an error), check it.
-If you have memory leaks — check it.  
+
+If you have memory leaks — check it.
+
 If you left file descriptors open — check it.
+
+
 
 
 
