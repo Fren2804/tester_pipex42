@@ -57,6 +57,13 @@ It checks the following aspects:
 - **leaks**: Uses `valgrind` to detect memory leaks, missing frees, and memory errors.
 - **fd**: Verifies that no file descriptors are left open at the end of the program.
 
+It also checks edge cases such as:
+
+- Empty arguments
+- Too few or too many arguments (for non-bonus Pipex)
+- Non-existent commands
+- Infile or outfile without permission
+
 ### How it works
 
 1. First of all, it will check **Norminette**.
@@ -93,6 +100,18 @@ But if you need even more details, you can search inside `tester_pipex.sh` using
 
 ![Tests](Tests.png)
 
+## ⚠️ Notes
+
+**Important!**
+
+A **KO** result does not necessarily mean your Pipex is wrong — it just means your output didn't match exactly what the tester was expecting.
+
+If your result is close or still makes sense logically, you can continue.  
+This tool is meant to help **find possible mistakes**, not to force a strict implementation.
+
+However, if your `pipex` returns `0` when it should return `1`, `2`, `127`, or **any non-zero value** (because it's an error), check it.
+If you have memory leaks — check it.  
+If you left file descriptors open — check it.
 
 
 
