@@ -11,7 +11,7 @@ Si este tester te fue útil, ¡agradecería mucho que dejaras una ⭐ en el repo
 Si encuentras algún bug, lo siento de antemano — puedes escribirme por Slack (@franmore) 📧
 
 He intentado cubrir todos los casos relevantes. Si me he dejado alguno, lo siento.  
-Respecto a los tests de `bonus2` (el `DELIMITER`), solo hay uno incluido. No estoy segura de si funciona correctamente porque no pude probar esa parte con mi propio código. ❗
+Respecto a los tests de `bonus2` (el `DELIMITER`), solo hay uno incluido. No estoy seguro de si funciona correctamente porque no pude probar esa parte con mi propio código. ❗
 
 # Uso
 
@@ -23,7 +23,7 @@ Clona el repositorio **dentro del directorio de tu proyecto Pipex**:
 git clone https://github.com/Fren2804/tester_pipex42.git
 
 ```
-MMueve el archivo *.sh desde la carpeta del tester a la raíz de tu directorio de Pipex:
+Mueve el archivo *.sh desde la carpeta del tester a la raíz de tu directorio de Pipex:
 
 ![Organizacion de Archivos](Files_Org.png)
 
@@ -72,7 +72,7 @@ También se comprueban casos límite como:
 2. Después se compila Pipex **sin bonus**.
 3. Si se selecciona una flag de bonus, también se compila Pipex **con bonus**.
 4. Luego se ejecutan los tests.
-5. Finalmente, verás las **comparaciones entre tu salida y la salida esperada**.
+5. Y finalmente, verás las **comparaciones entre tu salida y la salida esperada**.
 
 ⚠️ Este proceso no es rápido, así que tómalo con calma y ten paciencia.
 
@@ -116,6 +116,8 @@ Sin embargo, si tu `pipex` devuelve `0` cuando debería devolver `1`, `2`, `127`
 
 Si tienes fugas de memoria — revísalo.  
 Si dejas descriptores de archivo abiertos — revísalo.
+
+# Muchas gracias 😃
 
 
 
