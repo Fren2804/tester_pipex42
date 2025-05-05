@@ -87,7 +87,7 @@ If you need more information, each test has its own directory containing:
 
 You can inspect these files for deeper debugging and comparison:
 
-![Files](Files.jpg)
+![Files](Files.png)
 
 
 
