@@ -11,7 +11,6 @@ If you find a bug, my apologies in advance — feel free to reach out to me on S
 I’ve tried to cover all the relevant cases. If I missed any, I’m sorry!  
 Regarding the `bonus2` tests (the `DELIMITER`), there's only one test included. I’m not sure it works correctly because I couldn't test that part with my own code. ❗
 
-
 # Usage
 
 ## Download and Installation
@@ -45,6 +44,18 @@ Available flags (use only one at a time):
 | `-bonus2`  | Executes `-bonus1` tests + delimiter (here_doc)     |
 
 ## Tests
+
+### What does it test?
+
+This tester will compare your `pipex` output with the original output from the shell (`bash`).  
+It checks the following aspects:
+
+- **fd_output**: The actual output of your program.
+- **exit**: Ensures the exit code and error messages are correct.
+- **errors**: Validates the return value of your program.
+- **duration**: Runs a timing test (e.g. using `sleep`) to check delays.
+- **leaks**: Uses `valgrind` to detect memory leaks, missing frees, and memory errors.
+- **fd**: Verifies that no file descriptors are left open at the end of the program.
 
 ### How it works
 
