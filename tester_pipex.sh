@@ -227,8 +227,9 @@ function comprobar_test_exit_2()
     local line2=$(cat "$out/outfile${n_test_function}_ori_exit")
     local line2_aux=$(echo "$line2" | sed 's/bash: //')
     local line2_aux_sort=$(echo "$line2_aux" | sort)
+    local line1_sort=$(echo  "$line1" | sort)
 
-    if [[ "$line1" == "$line2_aux" ]] || [[ "$line1" == "$line2_aux_sort" ]]; then
+    if [[ "$line1" == "$line2_aux" ]] || [[ "$line1" == "$line2_aux_sort" ]] || [[ "$line1_sort" == "$line2_aux_sort" ]]; then
         return 0
     else
         echo "Test ${n_test_function} - Exit" >> $comp/result
