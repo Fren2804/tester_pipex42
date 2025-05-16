@@ -97,14 +97,6 @@ function comprobar_test_exit_1()
     if [[ "$line1" == "$line2_aux_1" ]] || [[ "$line1" == "$line2_aux_2" ]] || [[ "$line1" == "$line2_aux_1_sort" ]] || [[ "$line1" == "$line2_aux_2_sort" ]] || [[ "$line1_sort" == "$line2_aux_1_sort" ]] || [[ "$line1_sort" == "$line2_aux_2_sort" ]]; then
         return 0
     else
-        echo
-        echo "$line1"
-        echo "$line2"
-        echo "$line2_aux_1"
-        echo "$line2_aux_2"
-        echo "$line2_aux_1_sort"
-        echo "$line2_aux_2_sort"
-        echo
         echo "Test ${n_test_function} - Exit" >> $comp/result
         echo "Different content in $out/outfile${n_test_function}_exit and $out/outfile${n_test_function}_ori_exit please, check it." >> $comp/result
         echo "Outfile pipex:" >> $comp/result
@@ -425,7 +417,7 @@ tester_pipex.sh" > $inf/infile6
 
 
 #1 - Infile no Exist - 2 Commands Good - Outfile Good
-valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile" "grep hola" "ls -l" "$out/outfile$n_test" > $out/outfile${n_test}_val 2>&1
+valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ${pipex_dir}pipex "$inf/infile" "grep hola" "ls -l" "$out/outfile$n_test" > $out/outfile${n_test}_val 2>&1
 { ${pipex_dir}pipex "$inf/infile" "grep hola" "ls -l" "$out/outfile$n_test"; } > "$out/outfile${n_test}_exit" 2>&1
 error1=$?
 { grep "hola" < "$inf/infile" | ls -l > "$out/outfile${n_test}_ori"; }  2> "$out/outfile${n_test}_ori_exit"
@@ -435,7 +427,7 @@ echo "Test ${n_test} - Error pipex:$error1 error original:$error2" > $out/outfil
 ((n_test++))
 
 #2 - Infile no Permission - 2 Commands Good - Outfile Good
-valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile1" "ls -l" "wc -l" "$out/outfile${n_test}" > $out/outfile${n_test}_val 2>&1
+valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ${pipex_dir}pipex "$inf/infile1" "ls -l" "wc -l" "$out/outfile${n_test}" > $out/outfile${n_test}_val 2>&1
 { ${pipex_dir}pipex "$inf/infile1" "ls -l" "wc -l" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 error1=$?
 { ls -l < "$inf/infile1" | wc -l > "$out/outfile${n_test}_ori"; } 2> "$out/outfile${n_test}_ori_exit"
@@ -447,7 +439,7 @@ echo "Test ${n_test} - Error pipex:$error1 error original:$error2" > $out/outfil
 #3 - Infile Good - 2 Commands Good - Outfile no Permission
 touch $out/outfile_p1;
 chmod 000 $out/outfile_p1
-valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile2" "grep hola" "ls -l" "$out/outfile_p1" > $out/outfile${n_test}_val 2>&1
+valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ${pipex_dir}pipex "$inf/infile2" "grep hola" "ls -l" "$out/outfile_p1" > $out/outfile${n_test}_val 2>&1
 { ${pipex_dir}pipex "$inf/infile2" "grep hola" "ls -l" "$out/outfile_p1"; } > "$out/outfile${n_test}_exit" 2>&1
 error1=$?
 #That produce stderr 1
@@ -459,7 +451,7 @@ echo "Test ${n_test} - Error pipex:$error1 error original:$error2" > $out/outfil
 ((n_test++))
 
 #4 - Infile Good - First command Error - Last command Good - Outfile Good
-valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile2" "nocommandexist" "ls -l" "$out/outfile${n_test}" > $out/outfile${n_test}_val 2>&1
+valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ${pipex_dir}pipex "$inf/infile2" "nocommandexist" "ls -l" "$out/outfile${n_test}" > $out/outfile${n_test}_val 2>&1
 { ${pipex_dir}pipex "$inf/infile2" "nocommandexist" "ls -l" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 error1=$?
 { nocommandexist < "$inf/infile2" | ls -l > "$out/outfile${n_test}_ori"; } 2> "$out/outfile${n_test}_ori_exit"
@@ -469,7 +461,7 @@ echo "Test ${n_test} - Error pipex:$error1 error original:$error2" > $out/outfil
 ((n_test++))
 
 #5 - Infile Good - First command Good - Last command Error - Outfile Good
-valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile2" "ls -l" "nocommandexist" "$out/outfile${n_test}" > $out/outfile${n_test}_val 2>&1
+valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ${pipex_dir}pipex "$inf/infile2" "ls -l" "nocommandexist" "$out/outfile${n_test}" > $out/outfile${n_test}_val 2>&1
 { ${pipex_dir}pipex "$inf/infile2" "ls -l" "nocommandexist" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 error1=$?
 { ls -l < "$inf/infile2" | nocommandexist > "$out/outfile${n_test}_ori"; } 2> "$out/outfile${n_test}_ori_exit"
@@ -479,7 +471,7 @@ echo "Test ${n_test} - Error pipex:$error1 error original:$error2" > $out/outfil
 ((n_test++))
 
 #6 - Infile no Exist - First command Good - Last command Error - Outfile Good
-valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile" "ls -l" "nocommandexist" "$out/outfile${n_test}" > $out/outfile${n_test}_val 2>&1
+valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ${pipex_dir}pipex "$inf/infile" "ls -l" "nocommandexist" "$out/outfile${n_test}" > $out/outfile${n_test}_val 2>&1
 { ${pipex_dir}pipex "$inf/infile" "ls -l" "nocommandexist" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 error1=$?
 { ls -l < "$inf/infile" | nocommandexist > "$out/outfile${n_test}_ori"; } 2> "$out/outfile${n_test}_ori_exit"
@@ -489,7 +481,7 @@ echo "Test ${n_test} - Error pipex:$error1 error original:$error2" > $out/outfil
 ((n_test++))
 
 #7 - Infile Good - 2 Commands Error - Outfile Good
-valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile2" "nocommandexist" "nocommandexist" "$out/outfile${n_test}" > $out/outfile${n_test}_val 2>&1
+valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ${pipex_dir}pipex "$inf/infile2" "nocommandexist" "nocommandexist" "$out/outfile${n_test}" > $out/outfile${n_test}_val 2>&1
 { ${pipex_dir}pipex "$inf/infile2" "nocommandexist" "nocommandexist" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 error1=$?
 { nocommandexist < "$inf/infile2" | nocommandexist > "$out/outfile${n_test}_ori"; } 2> "$out/outfile${n_test}_ori_exit"
@@ -499,7 +491,7 @@ echo "Test ${n_test} - Error pipex:$error1 error original:$error2" > $out/outfil
 ((n_test++))
 
 #8 - Infile Good - 2 Commands Error - Outfile Good
-valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile2" "nocommandexist" "grep hola" "$out/outfile${n_test}" > $out/outfile${n_test}_val 2>&1
+valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ${pipex_dir}pipex "$inf/infile2" "nocommandexist" "grep hola" "$out/outfile${n_test}" > $out/outfile${n_test}_val 2>&1
 { ${pipex_dir}pipex "$inf/infile2" "nocommandexist" "grep hola" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 error1=$?
 { nocommandexist < "$inf/infile2" | grep hola > "$out/outfile${n_test}_ori"; } 2> "$out/outfile${n_test}_ori_exit"
@@ -509,7 +501,7 @@ echo "Test ${n_test} - Error pipex:$error1 error original:$error2" > $out/outfil
 ((n_test++))
 
 #9 - Infile Good - 2 Commands Error - Outfile Good
-valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile2" "nocommandexist" "grep -fhg" "$out/outfile${n_test}" > $out/outfile${n_test}_val 2>&1
+valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ${pipex_dir}pipex "$inf/infile2" "nocommandexist" "grep -fhg" "$out/outfile${n_test}" > $out/outfile${n_test}_val 2>&1
 { ${pipex_dir}pipex "$inf/infile2" "nocommandexist" "grep -fhg" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 error1=$?
 { nocommandexist < "$inf/infile2" | grep -fhg > "$out/outfile${n_test}_ori"; } 2> "$out/outfile${n_test}_ori_exit"
@@ -519,7 +511,7 @@ echo "Test ${n_test} - Error pipex:$error1 error original:$error2" > $out/outfil
 ((n_test++))
 
 #10 - Infile Good - 2 Commands Error - Outfile Good
-valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile2" "grep -fhg" "nocommandexist" "$out/outfile${n_test}" > $out/outfile${n_test}_val 2>&1
+valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ${pipex_dir}pipex "$inf/infile2" "grep -fhg" "nocommandexist" "$out/outfile${n_test}" > $out/outfile${n_test}_val 2>&1
 { ${pipex_dir}pipex "$inf/infile2" "grep -fhg" "nocommandexist" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 error1=$?
 { grep -fhg < "$inf/infile2" | nocommandexist > "$out/outfile${n_test}_ori"; } 2> "$out/outfile${n_test}_ori_exit"
@@ -529,7 +521,7 @@ echo "Test ${n_test} - Error pipex:$error1 error original:$error2" > $out/outfil
 ((n_test++))
 
 #11 - Infile Error - 2 Commands Error - Outfile Good
-valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile" "nocommandexist" "grep -fhg" "$out/outfile${n_test}" > $out/outfile${n_test}_val 2>&1
+valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ${pipex_dir}pipex "$inf/infile" "nocommandexist" "grep -fhg" "$out/outfile${n_test}" > $out/outfile${n_test}_val 2>&1
 { ${pipex_dir}pipex "$inf/infile" "nocommandexist" "grep -fhg" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 error1=$?
 { nocommandexist < "$inf/infile" | grep -fhg > "$out/outfile${n_test}_ori"; } 2> "$out/outfile${n_test}_ori_exit"
@@ -539,7 +531,7 @@ echo "Test ${n_test} - Error pipex:$error1 error original:$error2" > $out/outfil
 ((n_test++))
 
 #12 - Infile Error - 2 Commands Error - Outfile Good
-valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile" "nocommandexist" "grep -fhg" "$out/outfile${n_test}" > $out/outfile${n_test}_val 2>&1
+valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ${pipex_dir}pipex "$inf/infile" "nocommandexist" "grep -fhg" "$out/outfile${n_test}" > $out/outfile${n_test}_val 2>&1
 { ${pipex_dir}pipex "$inf/infile" "nocommandexist" "grep -fhg" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 error1=$?
 { nocommandexist < "$inf/infile" | grep -fhg > "$out/outfile${n_test}_ori"; } 2> "$out/outfile${n_test}_ori_exit"
@@ -549,7 +541,7 @@ echo "Test ${n_test} - Error pipex:$error1 error original:$error2" > $out/outfil
 ((n_test++))
 
 #13 - Infile Error - 2 Commands Error - Outfile Good
-valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile" "grep -fhg" "nocommandexist" "$out/outfile${n_test}" > $out/outfile${n_test}_val 2>&1
+valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ${pipex_dir}pipex "$inf/infile" "grep -fhg" "nocommandexist" "$out/outfile${n_test}" > $out/outfile${n_test}_val 2>&1
 { ${pipex_dir}pipex "$inf/infile" "grep -fhg" "nocommandexist" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 error1=$?
 { grep -fhg < "$inf/infile" | nocommandexist > "$out/outfile${n_test}_ori"; } 2> "$out/outfile${n_test}_ori_exit"
@@ -559,7 +551,7 @@ echo "Test ${n_test} - Error pipex:$error1 error original:$error2" > $out/outfil
 ((n_test++))
 
 #14 - Infile Good - 2 Commands Error - Outfile Error
-valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile2" "grep -fhg" "nocommandexist" "$out/outfile_p1" > $out/outfile${n_test}_val 2>&1
+valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ${pipex_dir}pipex "$inf/infile2" "grep -fhg" "nocommandexist" "$out/outfile_p1" > $out/outfile${n_test}_val 2>&1
 { ${pipex_dir}pipex "$inf/infile2" "grep -fhg" "nocommandexist" "$out/outfile_p1"; } > "$out/outfile${n_test}_exit" 2>&1
 error1=$?
 #Stderror 1
@@ -572,7 +564,7 @@ echo "Test ${n_test} - Error pipex:$error1 error original:$error2" > $out/outfil
 ((n_test++))
 
 #15 - Infile Good - 2 Commands Error - Outfile Error
-valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile2" "nocommandexist" "grep -fhg" "$out/outfile_p1" > $out/outfile${n_test}_val 2>&1
+valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ${pipex_dir}pipex "$inf/infile2" "nocommandexist" "grep -fhg" "$out/outfile_p1" > $out/outfile${n_test}_val 2>&1
 { ${pipex_dir}pipex "$inf/infile2" "nocommandexist" "grep -fhg" "$out/outfile_p1"; } > "$out/outfile${n_test}_exit" 2>&1
 error1=$?
 #Stderror 1
@@ -585,7 +577,7 @@ echo "Test ${n_test} - Error pipex:$error1 error original:$error2" > $out/outfil
 ((n_test++))
 
 #16 - Infile Error - 2 Commands Error - Outfile Error
-valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile" "nocommandexist" "grep -fhg" "$out/outfile_p1" > $out/outfile${n_test}_val 2>&1
+valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ${pipex_dir}pipex "$inf/infile" "nocommandexist" "grep -fhg" "$out/outfile_p1" > $out/outfile${n_test}_val 2>&1
 { ${pipex_dir}pipex "$inf/infile" "nocommandexist" "grep -fhg" "$out/outfile_p1"; } > "$out/outfile${n_test}_exit" 2>&1
 error1=$?
 #Stderror 1
@@ -598,7 +590,7 @@ echo "Test ${n_test} - Error pipex:$error1 error original:$error2" > $out/outfil
 ((n_test++))
 
 #17 - Just ./pipex
-valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex > $out/outfile${n_test}_val 2>&1
+valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ${pipex_dir}pipex > $out/outfile${n_test}_val 2>&1
 { ${pipex_dir}pipex; } > "$out/outfile${n_test}_exit" 2>&1
 error1=$?
 echo "Test ${n_test} - Error pipex:$error1" > $out/outfile${n_test}_errors
@@ -606,7 +598,7 @@ echo "Test ${n_test} - Error pipex:$error1" > $out/outfile${n_test}_errors
 ((n_test++))
 
 #18 - Empty files + args
-valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "" "" "" ""> $out/outfile${n_test}_val 2>&1
+valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ${pipex_dir}pipex "" "" "" ""> $out/outfile${n_test}_val 2>&1
 { ${pipex_dir}pipex "" "" "" ""; } > "$out/outfile${n_test}_exit" 2>&1
 error1=$?
 echo "Test ${n_test} - Error pipex:$error1" > $out/outfile${n_test}_errors
@@ -614,7 +606,7 @@ echo "Test ${n_test} - Error pipex:$error1" > $out/outfile${n_test}_errors
 ((n_test++))
 
 #19 - Infile Error - No more
-valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile" > $out/outfile${n_test}_val 2>&1
+valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ${pipex_dir}pipex "$inf/infile" > $out/outfile${n_test}_val 2>&1
 { ${pipex_dir}pipex "$inf/infile"; } > "$out/outfile${n_test}_exit" 2>&1
 error1=$?
 echo "Test ${n_test} - Error pipex:$error1" > $out/outfile${n_test}_errors
@@ -622,7 +614,7 @@ echo "Test ${n_test} - Error pipex:$error1" > $out/outfile${n_test}_errors
 ((n_test++))
 
 #20 - Infile Error - Outfile Error
-valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile" "$out/outfile_p1"> $out/outfile${n_test}_val 2>&1
+valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ${pipex_dir}pipex "$inf/infile" "$out/outfile_p1"> $out/outfile${n_test}_val 2>&1
 { ${pipex_dir}pipex "$inf/infile" "$out/outfile_p1"; } > "$out/outfile${n_test}_exit" 2>&1
 error1=$?
 echo "Test ${n_test} - Error pipex:$error1" > $out/outfile${n_test}_errors
@@ -630,7 +622,7 @@ echo "Test ${n_test} - Error pipex:$error1" > $out/outfile${n_test}_errors
 ((n_test++))
 
 #21 - Outfile Error - No more
-valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$out/outfile_p1"> $out/outfile${n_test}_val 2>&1
+valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ${pipex_dir}pipex "$out/outfile_p1"> $out/outfile${n_test}_val 2>&1
 { ${pipex_dir}pipex "$out/outfile_p1"; } > "$out/outfile${n_test}_exit" 2>&1
 error1=$?
 echo "Test ${n_test} - Error pipex:$error1" > $out/outfile${n_test}_errors
@@ -638,7 +630,7 @@ echo "Test ${n_test} - Error pipex:$error1" > $out/outfile${n_test}_errors
 ((n_test++))
 
 #22 - Infile Good - 3 Commands Good - Outfile Good
-valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile2" "ls -l" "cat -e" "cat -e" "$out/outfile${n_test}"> $out/outfile${n_test}_val 2>&1
+valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ${pipex_dir}pipex "$inf/infile2" "ls -l" "cat -e" "cat -e" "$out/outfile${n_test}"> $out/outfile${n_test}_val 2>&1
 { ${pipex_dir}pipex "$inf/infile2" "ls -l" "cat -e" "cat -e" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 error1=$?
 echo "Test ${n_test} - Error pipex:$error1" > $out/outfile${n_test}_errors
@@ -646,7 +638,7 @@ echo "Test ${n_test} - Error pipex:$error1" > $out/outfile${n_test}_errors
 ((n_test++))
 
 #23 - Infile Error - Empty args - Outfile Error
-valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile" "         " "      " "$out/outfile_p1"> $out/outfile${n_test}_val 2>&1
+valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ${pipex_dir}pipex "$inf/infile" "         " "      " "$out/outfile_p1"> $out/outfile${n_test}_val 2>&1
 { ${pipex_dir}pipex "$inf/infile" "         " "      " "$out/outfile_p1";} > "$out/outfile${n_test}_exit" 2>&1
 error1=$?
 echo "Test ${n_test} - Error pipex:$error1" > $out/outfile${n_test}_errors
@@ -654,7 +646,7 @@ echo "Test ${n_test} - Error pipex:$error1" > $out/outfile${n_test}_errors
 ((n_test++))
 
 #24 - Infile Error - First command Error - Empty arg - Outfile Error
-valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile" "   hjg      " "      " "$out/outfile_p1"> $out/outfile${n_test}_val 2>&1
+valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ${pipex_dir}pipex "$inf/infile" "   hjg      " "      " "$out/outfile_p1"> $out/outfile${n_test}_val 2>&1
 { ${pipex_dir}pipex "$inf/infile" "   hjg      " "      " "$out/outfile_p1";} > "$out/outfile${n_test}_exit" 2>&1
 error1=$?
 echo "Test ${n_test} - Error pipex:$error1" > $out/outfile${n_test}_errors
@@ -662,7 +654,7 @@ echo "Test ${n_test} - Error pipex:$error1" > $out/outfile${n_test}_errors
 ((n_test++))
 
 #25 - Infile Error - Empty arg - Last command Error  - Outfile Error
-valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile" "      " "   hjg      " "$out/outfile_p1"> $out/outfile${n_test}_val 2>&1
+valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ${pipex_dir}pipex "$inf/infile" "      " "   hjg      " "$out/outfile_p1"> $out/outfile${n_test}_val 2>&1
 { ${pipex_dir}pipex "$inf/infile" "      " "   hjg      " "$out/outfile_p1";} > "$out/outfile${n_test}_exit" 2>&1
 error1=$?
 echo "Test ${n_test} - Error pipex:$error1" > $out/outfile${n_test}_errors
@@ -670,7 +662,7 @@ echo "Test ${n_test} - Error pipex:$error1" > $out/outfile${n_test}_errors
 ((n_test++))
 
 #26 - Infile Empty - 2 Commands Good - Outfile Good
-valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile2" "grep hola" "ls -l" "$out/outfile${n_test}" > $out/outfile${n_test}_val 2>&1
+valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ${pipex_dir}pipex "$inf/infile2" "grep hola" "ls -l" "$out/outfile${n_test}" > $out/outfile${n_test}_val 2>&1
 { ${pipex_dir}pipex "$inf/infile2" "grep hola" "ls -l" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 error1=$?
 { grep hola < "$inf/infile2" | ls -l > "$out/outfile${n_test}_ori"; } 2> "$out/outfile${n_test}_ori_exit"
@@ -680,7 +672,7 @@ echo "Test ${n_test} - Error pipex:$error1 error original:$error2" > $out/outfil
 ((n_test++))
 
 #27 - Infile Empty - 2 Commands Good - Outfile Good
-valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile2" "ls -l" "grep hola" "$out/outfile${n_test}" > $out/outfile${n_test}_val 2>&1
+valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ${pipex_dir}pipex "$inf/infile2" "ls -l" "grep hola" "$out/outfile${n_test}" > $out/outfile${n_test}_val 2>&1
 { ${pipex_dir}pipex "$inf/infile2" "ls -l" "grep hola" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 error1=$?
 { ls -l < "$inf/infile2" | grep hola > "$out/outfile${n_test}_ori"; } 2> "$out/outfile${n_test}_ori_exit"
@@ -690,7 +682,7 @@ echo "Test ${n_test} - Error pipex:$error1 error original:$error2" > $out/outfil
 ((n_test++))
 
 #28 - Infile Empty - 2 Commands Good - Outfile Good
-valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile2" "ls -l" "grep hola1" "$out/outfile${n_test}" > $out/outfile${n_test}_val 2>&1
+valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ${pipex_dir}pipex "$inf/infile2" "ls -l" "grep hola1" "$out/outfile${n_test}" > $out/outfile${n_test}_val 2>&1
 { ${pipex_dir}pipex "$inf/infile2" "ls -l" "grep hola1" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 error1=$?
 { ls -l < "$inf/infile2" | grep hola1 > "$out/outfile${n_test}_ori"; } 2> "$out/outfile${n_test}_ori_exit"
@@ -700,7 +692,7 @@ echo "Test ${n_test} - Error pipex:$error1 error original:$error2" > $out/outfil
 ((n_test++))
 
 #29 - Infile Good - 2 Commands Good - Outfile Good
-valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile3" "grep hola" "wc -l" "$out/outfile${n_test}" > $out/outfile${n_test}_val 2>&1
+valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ${pipex_dir}pipex "$inf/infile3" "grep hola" "wc -l" "$out/outfile${n_test}" > $out/outfile${n_test}_val 2>&1
 { ${pipex_dir}pipex "$inf/infile3" "grep hola" "wc -l" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 error1=$?
 { grep hola < "$inf/infile3" | wc -l > "$out/outfile${n_test}_ori"; } 2> "$out/outfile${n_test}_ori_exit"
@@ -711,14 +703,14 @@ echo "Test ${n_test} - Error pipex:$error1 error original:$error2" > $out/outfil
 
 #30 - Infile Good - 2 Commands Good - Outfile Good
 start_val=$(date +%s)
-valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile3" "grep hola" "sleep 8" "$out/outfile${n_test}" > $out/outfile${n_test}_val 2>&1
+valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ${pipex_dir}pipex "$inf/infile3" "sleep 8" "sleep 8" "$out/outfile${n_test}" > $out/outfile${n_test}_val 2>&1
 end_val=$(date +%s)
 start=$(date +%s)
-{ ${pipex_dir}pipex "$inf/infile3" "grep hola" "sleep 8" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
+{ ${pipex_dir}pipex "$inf/infile3" "sleep 8" "sleep 8" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 end=$(date +%s)
 error1=$?
 start_ori=$(date +%s)
-{ grep hola < "$inf/infile3" | sleep 8 > "$out/outfile${n_test}_ori"; } 2> "$out/outfile${n_test}_ori_exit"
+{ sleep 8 < "$inf/infile3" | sleep 8 > "$out/outfile${n_test}_ori"; } 2> "$out/outfile${n_test}_ori_exit"
 end_ori=$(date +%s)
 error2=$?
 echo "Test ${n_test} - Error pipex:$error1 error original:$error2" > $out/outfile${n_test}_errors
@@ -730,7 +722,7 @@ echo "Val:$duration_val Me:$duration Ori:$duration_ori" > $out/outfile${n_test}_
 ((n_test++))
 
 #31 - Infile Good - 2 Commands Good - Outfile Good
-valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile3" "grep -i "hola"" "cat -e" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
+valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ${pipex_dir}pipex "$inf/infile3" "grep -i "hola"" "cat -e" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
 { ${pipex_dir}pipex "$inf/infile3" "grep -i "hola"" "cat -e" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 error1=$?
 { grep -i "hola" < "$inf/infile3" | cat -e > "$out/outfile${n_test}_ori"; } 2> "$out/outfile${n_test}_ori_exit"
@@ -740,7 +732,7 @@ echo "Test ${n_test} - Error pipex:$error1 error original:$error2" > $out/outfil
 ((n_test++))
 
 #32 - Infile Good - 2 Commands Good - Outfile Good
-valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile4" "grep -o -i "lorem"" "cat -e" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
+valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ${pipex_dir}pipex "$inf/infile4" "grep -o -i "lorem"" "cat -e" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
 { ${pipex_dir}pipex "$inf/infile4" "grep -o -i "lorem"" "cat -e" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 error1=$?
 { grep -o -i "lorem" < "$inf/infile4" | cat -e > "$out/outfile${n_test}_ori"; } 2> "$out/outfile${n_test}_ori_exit"
@@ -750,7 +742,7 @@ echo "Test ${n_test} - Error pipex:$error1 error original:$error2" > $out/outfil
 ((n_test++))
 
 #33 - Infile Good - 2 Commands Good - Outfile Good
-valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile4" "ls -l -a" "cat -e -n" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
+valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ${pipex_dir}pipex "$inf/infile4" "ls -l -a" "cat -e -n" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
 { ${pipex_dir}pipex "$inf/infile4" "ls -l -a" "cat -e -n" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 error1=$?
 { ls -l -a < "$inf/infile4" | cat -e -n > "$out/outfile${n_test}_ori"; } 2> "$out/outfile${n_test}_ori_exit"
@@ -760,7 +752,7 @@ echo "Test ${n_test} - Error pipex:$error1 error original:$error2" > $out/outfil
 ((n_test++))
 
 #34 - Infile Good - 2 Commands Good - Outfile Good
-valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile6" "head -4" "cat -e -n" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
+valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ${pipex_dir}pipex "$inf/infile6" "head -4" "cat -e -n" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
 { ${pipex_dir}pipex "$inf/infile6" "head -4" "cat -e -n" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 error1=$?
 { head -4 < "$inf/infile6" | cat -e -n > "$out/outfile${n_test}_ori"; } 2> "$out/outfile${n_test}_ori_exit"
@@ -773,7 +765,7 @@ chmod 777 $out/outfile${n_test}
 touch $out/outfile${n_test}_ori
 chmod 777 $out/outfile${n_test}_ori
 #35 - Infile Good - 2 Commands Good - Outfile Good
-valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile6" "head -4" "cat -e -n" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
+valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ${pipex_dir}pipex "$inf/infile6" "head -4" "cat -e -n" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
 { ${pipex_dir}pipex "$inf/infile6" "head -4" "cat -e -n" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 error1=$?
 { head -4 < "$inf/infile6" | cat -e -n > "$out/outfile${n_test}_ori"; } 2> "$out/outfile${n_test}_ori_exit"
@@ -786,7 +778,7 @@ chmod 777 $out/outfile${n_test}
 touch $out/outfile${n_test}_ori
 chmod 777 $out/outfile${n_test}_ori
 #36 - Infile Good - 2 Commands Good - Outfile Good
-valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile6" "cat -e" "grep nothing" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
+valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ${pipex_dir}pipex "$inf/infile6" "cat -e" "grep nothing" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
 { ${pipex_dir}pipex "$inf/infile6" "cat -e" "grep nothing" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 error1=$?
 { cat -e < "$inf/infile6" | grep nothing > "$out/outfile${n_test}_ori"; } 2> "$out/outfile${n_test}_ori_exit"
@@ -799,7 +791,7 @@ chmod 777 $out/outfile${n_test}
 touch $out/outfile${n_test}_ori
 chmod 777 $out/outfile${n_test}_ori
 #37 - Infile Good - 2 Commands Good - Outfile Good
-valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile6" "grep nothing" "cat -e" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
+valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ${pipex_dir}pipex "$inf/infile6" "grep nothing" "cat -e" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
 { ${pipex_dir}pipex "$inf/infile6" "grep nothing" "cat -e" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 error1=$?
 { grep nothing < "$inf/infile6" | cat -e > "$out/outfile${n_test}_ori"; } 2> "$out/outfile${n_test}_ori_exit"
@@ -809,7 +801,7 @@ echo "Test ${n_test} - Error pipex:$error1 error original:$error2" > $out/outfil
 ((n_test++))
 
 #38 - Infile Good - 2 Commands Good - Outfile Good
-valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile6" "head -4" "cat -e -n" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
+valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ${pipex_dir}pipex "$inf/infile6" "head -4" "cat -e -n" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
 { ${pipex_dir}pipex "$inf/infile6" "head -4" "cat -e -n" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 error1=$?
 { head -4 < "$inf/infile6" | cat -e -n > "$out/outfile${n_test}_ori"; } 2> "$out/outfile${n_test}_ori_exit"
@@ -852,7 +844,7 @@ else
 	((n_test++))
 
 	#39 - Infile Good - 2 Command Good - 2 Command Empty - Outfile Good
-	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile6" "head -4" "cat -e -n" "   " "    " "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ${pipex_dir}pipex "$inf/infile6" "head -4" "cat -e -n" "   " "    " "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
 	{ ${pipex_dir}pipex "$inf/infile6" "head -4" "cat -e -n" "   " "    " "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 	error1=$?
 	echo "Test ${n_test} - Error pipex:$error1" > $out/outfile${n_test}_errors
@@ -860,7 +852,7 @@ else
 	((n_test++))
 
 	#40 - Infile Good - 1 Command Good - Outfile Good
-	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile" "head -4" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ${pipex_dir}pipex "$inf/infile" "head -4" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
 	{ ${pipex_dir}pipex "$inf/infile" "head -4" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 	error1=$?
 	echo "Test ${n_test} - Error pipex:$error1" > $out/outfile${n_test}_errors
@@ -868,7 +860,7 @@ else
 	((n_test++))
 
 	#41 - Infile Good - 3 Command Good - 1 Command Empty - Outfile Good
-	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile" "head -4" "ls -l" "cat -e" "    " "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ${pipex_dir}pipex "$inf/infile" "head -4" "ls -l" "cat -e" "    " "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
 	{ ${pipex_dir}pipex "$inf/infile" "head -4" "ls -l" "cat -e" "    " "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 	error1=$?
 	echo "Test ${n_test} - Error pipex:$error1" > $out/outfile${n_test}_errors
@@ -876,7 +868,7 @@ else
 	((n_test++))
 
 	#42 - Infile no Exist - 4 Commands Good - Outfile Good
-	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile" "head -4" "cat -e" "ls -l" "sort" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ${pipex_dir}pipex "$inf/infile" "head -4" "cat -e" "ls -l" "sort" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
 	{ ${pipex_dir}pipex "$inf/infile" "head -4" "cat -e" "ls -l" "sort" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 	error1=$?
 	{ head -4 < "$inf/infile" | cat -e | ls -l | sort > "$out/outfile${n_test}_ori"; } 2> "$out/outfile${n_test}_ori_exit"
@@ -886,7 +878,7 @@ else
 	((n_test++))
 
 	#43 - Infile no Permission - 4 Commands Good - Outfile Good
-	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile" "head -4" "cat -e" "ls -l" "cat -e" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ${pipex_dir}pipex "$inf/infile" "head -4" "cat -e" "ls -l" "cat -e" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
 	{ ${pipex_dir}pipex "$inf/infile" "head -4" "cat -e" "ls -l" "cat -e" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 	error1=$?
 	{ head -4 < "$inf/infile" | cat -e | ls -l | cat -e > "$out/outfile${n_test}_ori"; } 2> "$out/outfile${n_test}_ori_exit"
@@ -896,7 +888,7 @@ else
 	((n_test++))
 
 	#44 - Infile no Permission - 3 Commands Good - 1 Command no Exist - Outfile Good
-	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile" "head -4" "cat -e" "hihuih" "cat -e" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ${pipex_dir}pipex "$inf/infile" "head -4" "cat -e" "hihuih" "cat -e" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
 	{ ${pipex_dir}pipex "$inf/infile" "head -4" "cat -e" "hihuih" "cat -e" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 	error1=$?
 	{ head -4 < "$inf/infile" | cat -e | hihuih | cat -e > "$out/outfile${n_test}_ori"; } 2> "$out/outfile${n_test}_ori_exit"
@@ -906,7 +898,7 @@ else
 	((n_test++))
 
 	#45 - Infile Good - 3 Commands Good - 1 Command no Exist - Outfile Good
-	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile6" "head -4" "cat -e" "hihuih" "cat -e" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ${pipex_dir}pipex "$inf/infile6" "head -4" "cat -e" "hihuih" "cat -e" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
 	{ ${pipex_dir}pipex "$inf/infile6" "head -4" "cat -e" "hihuih" "cat -e" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 	error1=$?
 	{ head -4 < "$inf/infile6" | cat -e | hihuih | cat -e > "$out/outfile${n_test}_ori"; } 2> "$out/outfile${n_test}_ori_exit"
@@ -920,7 +912,7 @@ else
 	chmod 777 $out/outfile${n_test}_ori
 
 	#46 - Infile Good - 4 Commands Good - Outfile Good
-	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile6" "head -4" "cat -e" "ls -l" "grep nononono" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ${pipex_dir}pipex "$inf/infile6" "head -4" "cat -e" "ls -l" "grep nononono" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
 	{ ${pipex_dir}pipex "$inf/infile6" "head -4" "cat -e" "ls -l" "grep nononono" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 	error1=$?
 	{ head -4 < "$inf/infile6" | cat -e | ls -l | grep nononono > "$out/outfile${n_test}_ori"; } 2> "$out/outfile${n_test}_ori_exit"
@@ -930,7 +922,7 @@ else
 	((n_test++))
 
 	#47 - Infile Good - 4 Commands Good - Outfile no Permission
-	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile6" "head -4" "cat -e" "ls -l" "cat -e" "$out/outfile_p1" > "$out/outfile${n_test}_val" 2>&1
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ${pipex_dir}pipex "$inf/infile6" "head -4" "cat -e" "ls -l" "cat -e" "$out/outfile_p1" > "$out/outfile${n_test}_val" 2>&1
 	{ ${pipex_dir}pipex "$inf/infile6" "head -4" "cat -e" "ls -l" "cat -e" "$out/outfile_p1"; } > "$out/outfile${n_test}_exit" 2>&1
 	error1=$?
 	{ head -4 < "$inf/infile6" | cat -e | ls -l | cat -e > "$out/outfile_p1"; } 2> "$out/outfile${n_test}_ori_exit"
@@ -940,7 +932,7 @@ else
 	((n_test++))
 
 	#48 - Infile Good - 1 Command Good - 3 Commands Error - Outfile Good
-	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile6" "cat -e" "nocommand" "command42Madrid" "FundacionTelefonica" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ${pipex_dir}pipex "$inf/infile6" "cat -e" "nocommand" "command42Madrid" "FundacionTelefonica" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
 	{ ${pipex_dir}pipex "$inf/infile6" "cat -e" "nocommand" "command42Madrid" "FundacionTelefonica" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 	error1=$?
 	{ cat -e < "$inf/infile6" | nocommand | command42Madrid | FundacionTelefonica > "$out/outfile${n_test}_ori"; } 2> "$out/outfile${n_test}_ori_exit"
@@ -950,7 +942,7 @@ else
 	((n_test++))
 
 	#49 - Infile Good - 8 Commands Good - Outfile Good
-	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex "$inf/infile6" "cat -e" "cat -e" "cat -e" "cat -e" "cat -e" "cat -e" "cat -e" "cat -e" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ${pipex_dir}pipex "$inf/infile6" "cat -e" "cat -e" "cat -e" "cat -e" "cat -e" "cat -e" "cat -e" "cat -e" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
 	{ ${pipex_dir}pipex "$inf/infile6" "cat -e" "cat -e" "cat -e" "cat -e" "cat -e" "cat -e" "cat -e" "cat -e" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 	error1=$?
 	{ cat -e < "$inf/infile6" | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e > "$out/outfile${n_test}_ori"; } 2> "$out/outfile${n_test}_ori_exit"
@@ -974,7 +966,7 @@ bash: noexistingcommand: No such file or directory" > $out/outfile${n_test}_ori_
 	else
 		((n_test++))
 		#50 - Infile Good - DELIMITER - Outfile Good
-		valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ${pipex_dir}pipex here_doc END "grep hola" "wc -l" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
+		valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes ${pipex_dir}pipex here_doc END "grep hola" "wc -l" "$out/outfile${n_test}" > "$out/outfile${n_test}_val" 2>&1
 		{ ${pipex_dir}pipex here_doc END "grep hola" "wc -l" "$out/outfile${n_test}"; } > "$out/outfile${n_test}_exit" 2>&1
 		error1=$?
 { cat << END | grep hola | wc -l > "$out/outfile${n_test}_ori"; } 2> "$out/outfile${n_test}_ori_exit"
